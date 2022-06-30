@@ -1,4 +1,5 @@
-﻿using Entities.Concrete;
+﻿using Core.Utilities.Results;
+using Entities.Concrete;
 using Entities.DTOs;
 using System;
 using System.Collections.Generic;
@@ -16,6 +17,6 @@ namespace Business.Abstract
 
         Session GetById(int id);
 
-        void Add(Session session);
+        IResult Add(Session session);
     }
 }

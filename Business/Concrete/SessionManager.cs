@@ -1,4 +1,5 @@
 ﻿using Business.Abstract;
+using Core.Utilities.Results;
 using DataAccess.Abstact;
 using Entities.Concrete;
 using Entities.DTOs;
@@ -19,9 +20,14 @@ namespace Business.Concrete
             _sessionDal = sessionDal;
         }
 
-        public void Add(Session session)
+        public IResult Add(Session session)
         {
+            if(session.SessionTime<DateTime.Today)
+            {
+                return new ErrorResult("Session Bugünden önceki tarih olamaz");
+            }
             _sessionDal.Add(session);
+            return new Result(true,"Session eklendi");
         }
 
         public List<Session> GetAll()
