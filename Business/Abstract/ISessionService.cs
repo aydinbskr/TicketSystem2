@@ -11,11 +11,11 @@ namespace Business.Abstract
 {
     public interface ISessionService
     {
-        List<Session> GetAll();
-  
-        List<SessionDetailDto> GetSessionDetails();
+        IDataResult<List<Session>> GetAll();
 
-        Session GetById(int id);
+        IDataResult<List<SessionDetailDto>> GetSessionDetails();
+
+        IDataResult<Session> GetById(int id);
 
         IResult Add(Session session);
     }

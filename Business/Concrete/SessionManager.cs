@@ -1,8 +1,13 @@
 ﻿using Business.Abstract;
+using Business.Constants;
+using Business.ValidationRules;
+using Core.Aspects.Validation;
+using Core.CrossCuttingConcerns.Validation;
 using Core.Utilities.Results;
 using DataAccess.Abstact;
 using Entities.Concrete;
 using Entities.DTOs;
+using FluentValidation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,29 +25,32 @@ namespace Business.Concrete
             _sessionDal = sessionDal;
         }
 
+        [ValidationAspect(typeof(SessionValidator))]
         public IResult Add(Session session)
         {
-            if(session.SessionTime<DateTime.Today)
-            {
-                return new ErrorResult("Session Bugünden önceki tarih olamaz");
-            }
+
+            
             _sessionDal.Add(session);
-            return new Result(true,"Session eklendi");
+            return new SuccessResult(Messages.SessionAdded);
         }
 
-        public List<Session> GetAll()
+        public IDataResult<List<Session>> GetAll()
         {
-            throw new NotImplementedException();
+            if(DateTime.Now.Hour==22)
+            {
+                return new ErrorDataResult<List<Session>>(Messages.MaintenanceTime);
+            }
+            return new SuccessDataResult<List<Session>>(_sessionDal.GetAll(),Messages.SessionsListed);
         }
 
-        public Session GetById(int id)
+        public IDataResult<Session> GetById(int id)
         {
-            return _sessionDal.Get(s => s.SessionId == id);
+            return new SuccessDataResult<Session>(_sessionDal.Get(s => s.SessionId == id));
         }
 
-        public List<SessionDetailDto> GetSessionDetails()
+        public IDataResult<List<SessionDetailDto>> GetSessionDetails()
         {
-            return _sessionDal.GetSessionDetails();
+            return new SuccessDataResult<List<SessionDetailDto>>(_sessionDal.GetSessionDetails());
         }
     }
 }
