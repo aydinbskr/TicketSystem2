@@ -18,5 +18,6 @@ namespace Business.Abstract
         IDataResult<Session> GetById(int id);
 
         IResult Add(Session session);
+        IResult Update(Session session);
     }
 }

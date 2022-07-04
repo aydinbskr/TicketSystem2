@@ -1,4 +1,5 @@
-﻿using Entities.Concrete;
+﻿using Core.Utilities.Results;
+using Entities.Concrete;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,8 +10,8 @@ namespace Business.Abstract
 {
     public interface IMovieService
     {
-        List<Movie> GetAll();
-        List<Movie> GetAllByCategoryId(int id);
-        List<Movie> GetByVisionDate(DateTime min,DateTime max);
+        IDataResult<List<Movie>> GetAll();
+        IDataResult<List<Movie>> GetAllByCategoryId(int id);
+        IDataResult<List<Movie>> GetByVisionDate(DateTime min,DateTime max);
     }
 }

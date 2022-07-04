@@ -4,8 +4,10 @@ using Business.Abstract;
 using Business.Concrete;
 using Castle.DynamicProxy;
 using Core.Utilities.Interceptors;
+using Core.Utilities.Security.JWT;
 using DataAccess.Abstact;
 using DataAccess.Concrete.EntityFramework;
+
 
 namespace Business.DependencyResolvers
 {
@@ -16,6 +18,15 @@ namespace Business.DependencyResolvers
             builder.RegisterType<SessionManager>().As<ISessionService>().SingleInstance();
             builder.RegisterType<EfSessionDal>().As<ISessionDal>().SingleInstance();
 
+            builder.RegisterType<MovieManager>().As<IMovieService>().SingleInstance();
+            builder.RegisterType<EfMovieDal>().As<IMovieDal>().SingleInstance();
+
+            builder.RegisterType<UserManager>().As<IUserService>();
+            builder.RegisterType<EfUserDal>().As<IUserDal>();
+
+            builder.RegisterType<AuthManager>().As<IAuthService>();
+            builder.RegisterType<JwtHelper>().As<ITokenHelper>();
+            
             var assembly=System.Reflection.Assembly.GetExecutingAssembly();
 
             builder.RegisterAssemblyTypes(assembly).AsImplementedInterfaces()

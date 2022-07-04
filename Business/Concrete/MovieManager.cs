@@ -1,4 +1,5 @@
 ﻿using Business.Abstract;
+using Core.Utilities.Results;
 using DataAccess.Abstact;
 using Entities.Concrete;
 using System;
@@ -18,19 +19,19 @@ namespace Business.Concrete
             _movieDal = movieDal;
         }
 
-        public List<Movie> GetAll()
+        public IDataResult<List<Movie>> GetAll()
         {
-            return _movieDal.GetAll();
+            return new SuccessDataResult<List<Movie>>(_movieDal.GetAll());
         }
 
-        public List<Movie> GetAllByCategoryId(int id)
+        public IDataResult<List<Movie>> GetAllByCategoryId(int id)
         {
-            return _movieDal.GetAll(m => m.MovieCategoryId == id);
+            return new SuccessDataResult<List<Movie>>(_movieDal.GetAll(m => m.MovieCategoryId == id));
         }
 
-        public List<Movie> GetByVisionDate(DateTime min, DateTime max)
+        public IDataResult<List<Movie>> GetByVisionDate(DateTime min, DateTime max)
         {
-            return _movieDal.GetAll(m=>m.MovieVisionDate>=min && m.MovieVisionDate<=max);
+            return new SuccessDataResult<List<Movie>>(_movieDal.GetAll(m=>m.MovieVisionDate>=min && m.MovieVisionDate<=max));
         }
     }
 }
