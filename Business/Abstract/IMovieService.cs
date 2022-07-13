@@ -13,5 +13,9 @@ namespace Business.Abstract
         IDataResult<List<Movie>> GetAll();
         IDataResult<List<Movie>> GetAllByCategoryId(int id);
         IDataResult<List<Movie>> GetByVisionDate(DateTime min,DateTime max);
+        IDataResult<Movie> GetById(int id);
+
+        IResult Add(Movie movie);
+        IResult Update(Movie movie);
     }
 }

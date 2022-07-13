@@ -13,6 +13,7 @@ namespace DataAccess.Concrete.EntityFramework
             optionsBuilder.UseNpgsql(@"Server=localhost;Port=5432;Database=TicketSystem;User Id=postgres;Password=Aksaray68!;");
         }
         public DbSet<Movie> Movies { get; set; }
+        public DbSet<Category> Categories { get; set; }
         public DbSet<Session> Sessions { get; set; }
         public DbSet<Role> Roles { get; set; }
         public DbSet<User> Users { get; set; }

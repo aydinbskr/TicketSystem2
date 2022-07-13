@@ -21,6 +21,9 @@ namespace Business.DependencyResolvers
             builder.RegisterType<MovieManager>().As<IMovieService>().SingleInstance();
             builder.RegisterType<EfMovieDal>().As<IMovieDal>().SingleInstance();
 
+            builder.RegisterType<CategoryManager>().As<ICategoryService>().SingleInstance();
+            builder.RegisterType<EfCategoryDal>().As<ICategoryDal>().SingleInstance();
+
             builder.RegisterType<UserManager>().As<IUserService>();
             builder.RegisterType<EfUserDal>().As<IUserDal>();
 
