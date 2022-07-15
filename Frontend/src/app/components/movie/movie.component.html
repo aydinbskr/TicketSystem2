@@ -1,11 +1,22 @@
 <div *ngIf="dataLoaded==false" class="spinner-border text-primary" role="status">
     <span class="visually-hidden">Loading...</span>
   </div>
+  <div class="mb-3">
+    <label for="filtertext" class="form-label">Search Movie</label>
+    <input type="text" [(ngModel)]="filterText" class="form-control" id="filtertext" placeholder="Enter movie name">
+  </div>
+  <div *ngIf="filterText.length>2" class="alert alert-success">
+    {{filterText}} aradınız.
+  </div>
 <table *ngIf="dataLoaded==true" class="table">
-    <tr *ngFor="let movie of movies">
+  <tbody>
+    <tr *ngFor="let movie of movies | filterPipe:filterText">
         <td>{{movie.movieId}}</td>
-        <td>{{movie.movieName}}</td>
+        <td>{{movie.movieName |uppercase}}</td>
         <td>{{movie.movieVisionDate}}</td>
         <td>{{movie.movieCategoryId}}</td>
+        <td>{{movie.movieCategoryId |vatAdded:10 |currency}}</td>
+        <td><button (click)="addToCart(movie)" type="button" class="btn btn-success">Sepete Ekle</button></td>
     </tr>
+  </tbody>
 </table>

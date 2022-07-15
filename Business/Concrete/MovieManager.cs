@@ -1,4 +1,6 @@
 ﻿using Business.Abstract;
+using Business.BusinessAspects;
+using Business.Constants;
 using Core.Aspects.Caching;
 using Core.Utilities.Results;
 using DataAccess.Abstact;
@@ -20,10 +22,11 @@ namespace Business.Concrete
             _movieDal = movieDal;
         }
 
+        [SecuredOperation("movie.add,admin")]
         public IResult Add(Movie movie)
         {
             _movieDal.Add(movie);
-            return new SuccessResult();
+            return new SuccessResult(Messages.MovieAdded);
         }
 
         public IDataResult<List<Movie>> GetAll()

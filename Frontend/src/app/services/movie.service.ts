@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ListResponseModel } from '../models/listResponseModel';
 import { Movie } from '../models/movie';
+import { ResponseModel } from '../models/responseModel';
 
 @Injectable({
   providedIn: 'root'
@@ -20,5 +21,8 @@ export class MovieService {
   getMoviesByCategory(categoryId:number):Observable<ListResponseModel<Movie>>{
     let newPath=this.apiUrl+"Movies/getbycategory?categoryId="+categoryId;
     return this.httpClient.get<ListResponseModel<Movie>>(newPath);
+  }
+  add(movie:Movie):Observable<ResponseModel>{
+    return this.httpClient.post<ResponseModel>(this.apiUrl+"movies/add",movie);
   }
 }

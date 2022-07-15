@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { Movie } from 'src/app/models/movie';
+import { CartService } from 'src/app/services/cart.service';
 import { MovieService } from 'src/app/services/movie.service';
 
 @Component({
@@ -11,8 +13,12 @@ import { MovieService } from 'src/app/services/movie.service';
 export class MovieComponent implements OnInit {
   movies:Movie[]=[];
   dataLoaded=false;
+  filterText="";
+  
   constructor(private movieService:MovieService,
-    private activatedRoute:ActivatedRoute) { }
+    private activatedRoute:ActivatedRoute,
+    private toastrService:ToastrService,
+    private cartService:CartService) { }
 
   ngOnInit(): void {
     this.activatedRoute.params.subscribe(params=>{
@@ -35,6 +41,10 @@ export class MovieComponent implements OnInit {
       this.movies=response.data
       this.dataLoaded=true;
     })   
+  }
+  addToCart(movie:Movie){
+    this.toastrService.success("Sepete eklendi",movie.movieName);
+    this.cartService.addToCart(movie);
   }
 
 }
